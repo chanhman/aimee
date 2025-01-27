@@ -1,7 +1,9 @@
-import Slider from 'react-slick';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+// Import Swiper styles
+import 'swiper/css';
 
 import VideoJS from './VideoJS';
 
@@ -18,32 +20,28 @@ const videoSources = [
   { src: '/INFINITY SCROLL_10.mp4', type: 'video/mp4' },
 ];
 
-const videoOptions = videoSources.map((source) => ({
-  autoplay: 'play',
-  controls: true,
-  loop: true,
-  muted: true,
-  responsive: true,
-  fluid: true,
-  sources: [source],
-}));
-
 export default function App() {
-  var settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    verticalSwiping: true,
-  };
-
   return (
-    <Slider {...settings}>
-      {videoOptions.map((options, index) => (
-        <div key={index}>
-          <VideoJS options={options} />
-        </div>
+    <Swiper
+      loop
+      spaceBetween={50}
+      slidesPerView={1}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+      autoplay={{
+        delay: 6 * 1000,
+      }}
+      modules={[Autoplay]}
+      touchEventsTarget="container"
+      grabCursor
+    >
+      {videoSources.map((video, index) => (
+        <SwiperSlide key={index}>
+          <div className="video-container">
+            <VideoJS src={video.src} />
+          </div>
+        </SwiperSlide>
       ))}
-    </Slider>
+    </Swiper>
   );
 }
