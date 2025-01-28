@@ -23,17 +23,16 @@ const videoSources = [
 export default function App() {
   return (
     <Swiper
+      autoplay={{delay: 9 * 1000,}}
+      direction='vertical'
+      grabCursor
       loop
-      spaceBetween={50}
-      slidesPerView={1}
+      modules={[Autoplay]}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{
-        delay: 6 * 1000,
-      }}
-      modules={[Autoplay]}
+      slidesPerView={1}
+      spaceBetween={50}
       touchEventsTarget="container"
-      grabCursor
     >
       {videoSources.map((video, index) => (
         <SwiperSlide key={index}>
