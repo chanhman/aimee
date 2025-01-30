@@ -3,7 +3,7 @@ body {
 }
 
 .video-container {
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .video-container div div {

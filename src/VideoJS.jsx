@@ -4,12 +4,12 @@ import { useInView } from 'react-intersection-observer';
 
 export const VideoJS = ({ src }) => {
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.25,
   });
 
   return (
     <div ref={ref}>
-      <ReactPlayer url={src} playing={inView} loop />
+      <ReactPlayer url={src} playing={inView} loop/>
     </div>
   );
 };
