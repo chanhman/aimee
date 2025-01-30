@@ -5,8 +5,8 @@ import { Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
-
 import VideoJS from './VideoJS';
+import VideoJSLazy from './VideoJSLazy';
 
 const videoSources = [
   { src: '/INFINITY SCROLL_1.mp4', type: 'video/mp4' },
@@ -25,7 +25,7 @@ export default function App() {
   const [showLoader, setShowLoader] = useState(true)
   
   useEffect(() => {
-    const timeout = setTimeout(() => setShowLoader(false), 5000);
+    const timeout = setTimeout(() => setShowLoader(false), 8000);
     return () => {
       clearTimeout(timeout);
     };
