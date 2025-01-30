@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-
-// Import Swiper styles
 import 'swiper/css';
 import VideoJS from './VideoJS';
-import VideoJSLazy from './VideoJSLazy';
 
 const videoSources = [
   { src: '/INFINITY SCROLL_1.mp4', type: 'video/mp4' },
@@ -22,36 +18,38 @@ const videoSources = [
 ];
 
 export default function App() {
-  const [showLoader, setShowLoader] = useState(true)
-  
-  useEffect(() => {
-    const timeout = setTimeout(() => setShowLoader(false), 8000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [])
+  const [loadedVideos, setLoadedVideos] = useState([0]); // Load first video
+
+  const handleSlideChange = (swiper) => {
+    const nextIndex = swiper.activeIndex;
+    if (!loadedVideos.includes(nextIndex)) {
+      setLoadedVideos((prev) => [...prev, nextIndex]);
+    }
+  };
+
   return (
-    showLoader ? <div className="loader">Loading...</div> : (
-      <Swiper
-        autoplay={{ delay: 9 * 1000 }}
-        direction='vertical'
-        grabCursor
-        loop
-        modules={[Autoplay]}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
-        slidesPerView={1}
-        spaceBetween={50}
-        touchEventsTarget="container"
-      >
-        {videoSources.map((video, index) => (
-          <SwiperSlide key={index}>
-            <div className="video-container">
+    <Swiper
+      autoplay={{ delay: 9000 }}
+      direction="vertical"
+      grabCursor
+      loop
+      modules={[Autoplay]}
+      onSlideChange={handleSlideChange}
+      slidesPerView={1}
+      spaceBetween={50}
+      touchEventsTarget="container"
+    >
+      {videoSources.map((video, index) => (
+        <SwiperSlide key={index}>
+          <div className="video-container">
+            {loadedVideos.includes(index) ? (
               <VideoJS src={video.src} />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    )
+            ) : (
+              <div className="video-placeholder">Loading...</div>
+            )}
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 }
