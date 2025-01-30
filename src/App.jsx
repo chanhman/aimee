@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -21,26 +22,36 @@ const videoSources = [
 ];
 
 export default function App() {
+  const [showLoader, setShowLoader] = useState(true)
+  
+  useEffect(() => {
+    const timeout = setTimeout(() => setShowLoader(false), 5000);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [])
   return (
-    <Swiper
-      autoplay={{delay: 9 * 1000,}}
-      direction='vertical'
-      grabCursor
-      loop
-      modules={[Autoplay]}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-      slidesPerView={1}
-      spaceBetween={50}
-      touchEventsTarget="container"
-    >
-      {videoSources.map((video, index) => (
-        <SwiperSlide key={index}>
-          <div className="video-container">
-            <VideoJS src={video.src} />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    showLoader ? <div className="loader">Loading...</div> : (
+      <Swiper
+        autoplay={{ delay: 9 * 1000 }}
+        direction='vertical'
+        grabCursor
+        loop
+        modules={[Autoplay]}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+        slidesPerView={1}
+        spaceBetween={50}
+        touchEventsTarget="container"
+      >
+        {videoSources.map((video, index) => (
+          <SwiperSlide key={index}>
+            <div className="video-container">
+              <VideoJS src={video.src} />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    )
   );
 }

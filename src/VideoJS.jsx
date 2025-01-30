@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import ReactPlayer from 'react-player';
-
+import ReactPlayer from 'react-player/lazy'
 import { useInView } from 'react-intersection-observer';
 
 export const VideoJS = ({ src }) => {
