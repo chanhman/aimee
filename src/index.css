@@ -1,6 +1,11 @@
 body {
   margin: 0;
 }
+
+.video-container {
+  pointer-events: none;
+}
+
 .video-container div div {
   width: auto !important;
   height: auto !important;
